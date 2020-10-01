@@ -1,4 +1,5 @@
 import React from 'react'
+import Display from './Display'
 
 export default function Available(){
     const [userInput,setUserInput] = React.useState('')
@@ -42,33 +43,16 @@ export default function Available(){
     return(
         <div>
             <h1>My Wish List</h1>
-            <h2>Available Items ({availableArray.length})</h2>
             <input onChange={(e)=>setUserInput(e.target.value)} placeholder="Add Item" />
             <button onClick={(e)=>addToAvailable()}>Add To Available</button>
-            <ul>
-                {availableArray.map((item,index) =>
-                <div key={index}>
-                        <li >
-                            {item} <button onClick={(e)=>addToWishList(item,index)}>Add To WishLista</button>
-                        </li>
-                        </div>
-                    
-            )}
-            </ul>
-
-
-
-            <h2>My Wist List ({wishListArray.length})</h2>
-            <ul>
-                {wishListArray.map((item,index) =>
-                <div key={index}>
-                        <li >
-                            {item} <button onClick={(e)=>removeToWishList(item,index)}>Back plz</button>
-                        </li>
-                        </div>
-                    
-            )}
-            </ul>
+           <Display
+            name="Available Items" 
+            function={addToWishList}
+             array={availableArray} />
+           <Display 
+           name="Wishlist" 
+           function={removeToWishList}
+            array={wishListArray} />
         </div>
     )
 }

@@ -31,13 +31,19 @@ export default function Available(){
     //     newArray[index].type = 'available'
     //     setItems(newArray)
     // }
-
+const submit=(e)=>{
+    e.preventDefault()
+    addToAvailable()
+}
     return(
         <div>
         <h1>My Wish List</h1>
         <h2>Available Items (2)</h2>
-        <input value={userInput} onKeyDown={e=> e.key === 'Enter' ? addToAvailable():null} onChange={(e)=>setUserInput(e.target.value)} placeholder="Add Item" />
-        <button onClick={(e)=>addToAvailable()}>Add To Available</button>
+       <form onSubmit={submit}> <input required value={userInput} 
+    //    onKeyDown={e=> e.key === 'Enter' ? addToAvailable():null} 
+       onChange={(e)=>setUserInput(e.target.value)} placeholder="Add Item" />
+        <button type="submit">Add To Available</button>
+       </form>
         <ul>
             {items.filter(i=>i.type === 'available').map((item)=>
                 <li>{item.name}<button onClick={()=>modify(item,'wish')}>Add To Wishlist</button></li>
