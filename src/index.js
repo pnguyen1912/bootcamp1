@@ -6,9 +6,11 @@ import Available from './Available';
 import OneArray from './OneArray'
 import VotingApp from './VotingApp'
 import  ToDoList from './ToDoList'
+import Routing from './Routing'
+
 ReactDOM.render(
   <React.StrictMode>
-    <ToDoList />
+    <Routing />
   </React.StrictMode>
   ,
   document.getElementById('root')
