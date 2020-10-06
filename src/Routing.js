@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
     BrowserRouter as Router,
     Switch,
@@ -7,21 +7,48 @@ import {
   } from "react-router-dom";
 
   import Home from './Routers/Home'
-  import About from './Routers/About'
+  import Add from './Routers/Add'
   import User from './Routers/User'
-
+import axios from 'axios'
 export default function Routing(){
-    const [userInput,setUserInput] = React.useState('')
+    const [peopleArray,setPeopleArray] = React.useState([])
+
+    useEffect(()=>{
+        axios({
+            method: 'get',
+            url: 'https://5f7bab5e00bd740016909c7f.mockapi.io/tier1'
+        }).then(res => {
+            console.log(res.data)
+            let dataArray = res.data.map(item=> {
+                return {
+                    fullName: item.name,
+                    favCode: item.favCode,
+                    homeTown: item.homeTown
+                }
+            })
+            setPeopleArray(dataArray)
+        })
+    },[])
 
     return(
         <div>
         <Router>
-        <Home />
-        <input onChange={e=>setUserInput(e.target.value)} />
+                <Link to='/'><button>Home</button></Link>
+                <Link to='/user'><button>User</button></Link>
+                <Link to='/add'><button>Add</button></Link>
+   
             <Switch>
-                {/* <Route exact path='/' render={()=><Home />} /> */}
-                <Route path='/about' render={()=><About name={userInput} />} />
-                <Route path='/user' render={()=><User name={userInput} />} />
+                <Route exact path='/' render={()=><Home />} />
+                <Route path='/add' render={()=><Add 
+                  peopleArray={peopleArray} 
+                  setPeopleArray={setPeopleArray}
+                 />}
+                 />
+                 
+                <Route path='/user'><User 
+                                  peopleArray={peopleArray} 
+/>
+                                  </Route>
             </Switch>
         </Router>
         </div>
